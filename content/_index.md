@@ -1,17 +1,11 @@
 ---
-title: My Site
+title: ArVas
 toc: false
 ---
 
-This is the landing page.
-
-## Explore
+Bem-vindo ao blog. Aqui documento minha jornada estudando medicina na UNLP, La Plata, Argentina.
 
 {{< cards >}}
-  {{< card link="docs" title="Docs" icon="book-open" >}}
-  {{< card link="about" title="About" icon="user" >}}
+  {{< card link="posts" title="Posts" icon="pencil" >}}
+  {{< card link="about" title="Sobre" icon="user" >}}
 {{< /cards >}}
-
-## Documentation
-
-For more information, visit [Hextra](https://imfing.github.io/hextra).

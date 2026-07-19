@@ -1,5 +1,54 @@
 # Hugo configuration file
-title: My Site
+# Dev mode: hugo server --renderSegments recent
+segments:
+  recent:
+    includes:
+    - kind: '{home,section,taxonomy,term}'
+    - path: '{/2026/**,/2027/**,/about,/archives,/off-topic}'
+
+title: ArVas - Blog de um estudante de medicina na Argentina
+enableEmoji: true
+locale: "pt-BR"
+defaultContentLanguage: "pt-br"
+baseURL: "https://www.arvas.pages.dev/"
+
+disableKinds:
+- term
+
+languages:
+  pt-br:
+    label: "Português"
+    locale: "pt-BR"
+    weight: 1
+    menu:
+      main:
+        - name: Tema
+          weight: 0
+          params:
+            type: theme-toggle
+        - name: Sobre
+          pageRef: /about
+          weight: 1
+        - name: Buscar
+          weight: 3
+          params:
+            type: search
+      sidebar:
+        - name: Posts Off-Topic
+          weight: 4
+          url: "/off-topic/"
+          params:
+            icon: chat-bubble-left-right
+
+outputs:
+  home: [HTML, SearchIndex]
+
+outputFormats:
+  SearchIndex:
+    mediaType: application/json
+    baseName: search-index
+    isPlainText: true
+    notAlternative: true
 
 # import hextra as module
 module:
@@ -16,41 +65,35 @@ markup:
   highlight:
     noClasses: false
 
-menu:
-  main:
-    - name: Docs
-      pageRef: /docs
-      weight: 1
-    - name: About
-      pageRef: /about
-      weight: 2
-    - name: Contact ↗
-      url: "https://github.com/imfing"
-      weight: 3
-    - name: Search
-      weight: 4
-      params:
-        type: search
-    - name: GitHub
-      weight: 5
-      url: "https://github.com/imfing/hextra-starter-template"
-      params:
-        icon: github
-    - name: Twitter
-      weight: 6
-      url: "https://twitter.com/"
-      params:
-        icon: x-twitter
-
 params:
+  # Disable Hextra's built-in FlexSearch: it shipped a ~14 MB client index
+  # to a DuckDuckGo `site:` query instead — zero payload, full-text, instant.
+  search:
+    enable: false
+
   navbar:
     displayTitle: true
-    displayLogo: false
+    displayLogo: true
 
   footer:
-    displayCopyright: false
+    displayCopyright: true
     displayPoweredBy: true
 
   editURL:
-    enable: true
+    enable: false
     base: "https://github.com/imfing/hextra-starter-template/edit/main/content"
+
+  # Keep default youtube shortcode as configurable
+  youtubeDefaults:
+    iframeAllowList: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy: "no-referrer"
+    iframeStyle: "border:0; width:100%; aspect-ratio:16/9;"
+
+  theme:
+    default: light
+
+  author:
+    name: Artur Vasconcelos
+    email: artur.vasconcelos8@gmail.com
+
+  description: "Blog do Artur Vasconcelos, um brasileiro fazendo medicina na Argentina."

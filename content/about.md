@@ -1,6 +1,7 @@
 ---
-title: About
+title: Sobre
 type: about
+translationKey: about
 ---
 
-This is the about page.
+Sou o Artur Vasconcelos, estudante

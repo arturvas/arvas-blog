@@ -1,79 +1,173 @@
-# Hextra Starter Template
+# ArVas - based on Hextra Starter Template
 
-[![Deploy Hugo site to Pages](https://github.com/imfing/hextra-starter-template/actions/workflows/pages.yaml/badge.svg)](https://github.com/imfing/hextra-starter-template/actions/workflows/pages.yaml)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/6e83fd88-5ffe-4808-9689-c0f3b100bfe3/deploy-status)](https://app.netlify.com/sites/hextra-starter-template/deploys)
-![Vercel Deployment Status](https://img.shields.io/github/deployments/imfing/hextra-starter-template/production?logo=vercel&logoColor=white&label=vercel&labelColor=black&link=https%3A%2F%2Fhextra-starter-template.vercel.app%2F)
+## Desenvolvimento Local
 
+### Pré-requisitos
 
-🐣 Minimal template for getting started with [Hextra](https://github.com/imfing/hextra)
+**Docker (Recomendado)**
 
-![hextra-template](https://github.com/imfing/hextra-starter-template/assets/5097752/c403b9a9-a76c-47a6-8466-513d772ef0b7)
+- Docker e Docker Compose
 
-[🌐 Demo ↗](https://imfing.github.io/hextra-starter-template/)
+**Instalação Local**
 
-## Quick Start
+- Hugo (Extended version)
+- Go
+- Ruby
+- Git
 
-Use this template to create your own repository:
+### Usando Docker
 
-<img src="https://docs.github.com/assets/cb-77734/mw-1440/images/help/repository/use-this-template-button.webp" width=400 />
-
-You can also quickly start developing using the following online development environment:
-
-- [GitHub Codespaces](https://github.com/codespaces)
-
-    [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/imfing/hextra-starter-template)
-
-    Create a new codespace and follow the [Local Development](#local-development) to launch the preview
-
-
-## Deployment
-
-### GitHub Pages
-
-A GitHub Actions workflow is provided in [`.github/workflows/pages.yaml`](./.github/workflows/pages.yaml) to [publish to GitHub Pages](https://github.blog/changelog/2022-07-27-github-pages-custom-github-actions-workflows-beta/) for free. 
-
-For details, see [Publishing with a custom GitHub Actions workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow).
-
-Note: in the settings, make sure to set the Pages deployment source to **GitHub Actions**:
-
-<img src="https://github.com/imfing/hextra-starter-template/assets/5097752/99676430-884e-42ab-b901-f6534a0d6eee" width=600 />
-
-[Run the workflow manually](https://docs.github.com/en/actions/using-workflows/manually-running-a-workflow) if it's not triggered automatically.
-
-### Netlify
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/imfing/hextra-starter-template)
-
-### Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fimfing%2Fhextra-starter-template&env=HUGO_VERSION)
-
-Override the configuration:
-
-<img src="https://github.com/imfing/hextra-starter-template/assets/5097752/e2e3cecd-c884-47ec-b064-14f896fee08d" width=600 />
-
-## Local Development
-
-Pre-requisites: [Hugo](https://gohugo.io/getting-started/installing/), [Go](https://golang.org/doc/install) and [Git](https://git-scm.com)
+1. **Clone o repositório:**
 
 ```shell
-# Clone the repo
-git clone https://github.com/imfing/hextra-starter-template.git
-
-# Change directory
-cd hextra-starter-template
-
-# Start the server
-hugo mod tidy
-hugo server --logLevel debug --disableFastRender -p 1313
+git clone https://github.com/arturvas/arvas-blog.git
+cd arvas-blog
 ```
 
-### Update theme
+2. **Inicie o ambiente:**
 
 ```shell
-hugo mod get -u
-hugo mod tidy
+./scripts/dev.sh start
 ```
 
-See [Update modules](https://gohugo.io/hugo-modules/use-modules/#update-modules) for more details.
+3. **Acesse o blog:**
 
+- <http://localhost:1313>
+
+4. **Comandos úteis:**
+
+```shell
+./scripts/dev.sh logs           # Ver logs
+./scripts/dev.sh stop           # Parar ambiente
+./scripts/dev.sh new-post       # Criar novo post
+./scripts/dev.sh generate-index # Gerar índice
+./scripts/dev.sh help           # Ver todos os comandos
+```
+
+### Instalação Local
+
+```shell
+# clone repository
+git clone https://github.com/arturvas/arvas-blog.git
+cd arvas-blog
+
+# adicionar conteúdo
+hugo new content/2025/08/29/hello/index.md
+
+# gerar índice (gera _index.md + archives/_index.md)
+./scripts/generate_index.rb
+
+# build completo (produção) — sem --gc para não invalidar o cache do Netlify
+hugo --minify
+
+# dev server rápido (só renderiza 2025+ via renderSegments + in-memory + fast render)
+hugo server --renderSegments recent --renderToMemory -p 1313
+
+# dev server completo (se precisar ver posts antigos)
+hugo server --renderToMemory -p 1313
+```
+
+> **Performance do build no Netlify:** o `netlify.toml` está configurado com
+> o `netlify-plugin-cache` persistindo `resources/_gen` e o cache de módulos
+> do Hugo entre builds. O primeiro deploy depois de habilitar o cache é
+> frio; os seguintes reusam imagens processadas, SCSS compilado e módulos
+> remotos (~50–80% mais rápido). Por isso o build command não usa `--gc`:
+> isso limparia exatamente o que queremos cachear.
+
+## Como Contribuir
+
+### 1. Fork e Clone
+
+- Faça um fork do repositório
+- Clone seu fork localmente
+
+### 2. Ambiente de Desenvolvimento
+
+- Use Docker (recomendado) ou instale as dependências localmente
+- Siga as instruções acima para configurar o ambiente
+
+### 3. Fazendo Mudanças
+
+- Crie uma branch para sua feature: `git checkout -b feature/nova-funcionalidade`
+- Faça suas alterações
+- Teste localmente usando `./scripts/dev.sh start` (Docker) ou `hugo server`
+- Commit suas mudanças: `git commit -m "Adiciona nova funcionalidade"`
+
+### 4. Criando Posts
+
+```shell
+# Com Docker
+./scripts/dev.sh new-post "Título do Post"
+
+# Manualmente
+mkdir -p content/2025/01/15/meu-post
+nvim content/2025/01/15/meu-post/index.md
+```
+
+### 5. Estrutura de um Post
+
+```markdown
+---
+title: "Título do Post"
+date: 2025-01-15T10:00:00-03:00
+draft: false
+description: "Descrição do post"
+tags: [tag1, tag2]
+categories: [categoria]
+---
+
+Conteúdo do post aqui...
+```
+
+### 6. Pull Request
+
+- Push para sua branch: `git push origin feature/nova-funcionalidade`
+- Abra um Pull Request no GitHub
+- Descreva suas mudanças claramente
+
+## Estrutura do Projeto
+
+```
+akitaonrails.github.io/
+├── content/              # Posts e páginas (Markdown)
+│   ├── _index.md         # Homepage (auto-gerado, posts recentes)
+│   └── archives/
+│       └── _index.md     # Arquivo completo (auto-gerado, posts antigos)
+├── layouts/              # Templates HTML
+├── assets/               # CSS, JS, imagens
+├── hugo.yaml             # Configuração do Hugo (inclui render segments)
+├── go.mod                # Dependências Go
+├── scripts/
+│   └── generate_index.rb # Gera _index.md + archives/_index.md
+├── Dockerfile            # Imagem Docker
+└── docker-compose.yml    # Orquestração Docker (usa --renderSegments recent)
+```
+
+## Checklist para Contribuições
+
+- [ ] Testei localmente com Docker ou instalação local
+- [ ] Gerei o índice de posts (`./scripts/dev.sh generate-index` ou `./scripts/generate_index.rb`)
+- [ ] Verifiquei se o site funciona corretamente
+- [ ] Segui as convenções de nomenclatura do projeto
+- [ ] Documentei mudanças significativas
+
+## Diretrizes de Contribuição
+
+- Mantenha mudanças pequenas e focadas
+- Teste sempre antes de submeter
+- Use mensagens de commit descritivas
+- Respeite o estilo de código existente
+- Para mudanças grandes, abra uma issue primeiro
+
+## Licença
+
+Shield: [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
+
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
