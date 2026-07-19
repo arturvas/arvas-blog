@@ -5,10 +5,7 @@ Blog pessoal Hugo (pt-BR), tema Hextra via Hugo Modules. Documenta minha jornada
 estudando medicina na UNLP, La Plata, Argentina.
 
 ## Status do repositório
-Este projeto começou como clone de akitaonrails.github.io. Vários arquivos legados 
-dele (scripts/*.rb, docker-compose.yml) ainda estão no disco por precaução, mas 
-NÃO fazem parte do meu workflow — ignore-os, não são necessários e não devem ser 
-executados.
+Este projeto começou como clone de akitaonrails.github.io.
 
 ## Commands
 hugo server -D          # dev local
@@ -19,7 +16,7 @@ Posts em content/posts/<ano>/<mes>/<dia>/<slug>/index.md (page bundle)
 Sem geração de índice manual — Hextra lista automaticamente.
 
 ## Comentários
-Giscus (GitHub Discussions) — configurado mas ainda não habilitado no site.
+Giscus (GitHub Discussions) — ainda não configurado
 
 ## Deploy
-Cloudflare Pages, deploy automático a cada push.
+Cloudflare Pages
