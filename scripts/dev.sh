@@ -5,7 +5,7 @@ set -euo pipefail
 readonly GREEN='\033[0;32m'
 readonly RED='\033[0;31m'
 readonly NC='\033[0m'
-readonly SERVICE_NAME="akitaonrails-blog"
+readonly SERVICE_NAME="arvas-blog"
 
 print_message() {
     echo -e "${GREEN}[INFO]${NC} $1"
@@ -82,7 +82,7 @@ new_post() {
 
     date_path=$(date +%Y/%m/%d)
     slug=$(slugify "$title")
-    post_dir="content/${date_path}/${slug}"
+    post_dir="content/posts/${date_path}/${slug}"
 
     print_message "Criando post: $post_dir"
 
@@ -95,7 +95,6 @@ date: $(date +%Y-%m-%dT%H:%M:%S%z)
 draft: false
 description: "Descrição do post aqui"
 tags: []
-categories: []
 ---
 
 Conteúdo do post aqui...
@@ -120,7 +119,7 @@ show_help() {
 
 main() {
     check_docker
-    
+
     case "${1:-help}" in
         start)
             start_dev

@@ -6,7 +6,7 @@ segments:
     - kind: '{home,section,taxonomy,term}'
     - path: '{/2026/**,/2027/**,/about,/archives,/off-topic}'
 
-title: ArVas - Blog de um estudante de medicina na Argentina
+title: ArVas
 enableEmoji: true
 locale: "pt-BR"
 defaultContentLanguage: "pt-br"
