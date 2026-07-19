@@ -61,47 +61,23 @@ hugo new content/2025/08/29/hello/index.md
 hugo --minify
 
 # dev server rápido (só renderiza 2025+ via renderSegments + in-memory + fast render)
-hugo server --renderSegments recent --renderToMemory -p 1313
+hugo server -D
 
-# dev server completo (se precisar ver posts antigos)
-hugo server --renderToMemory -p 1313
 ```
 
-> **Performance do build no Netlify:** o `netlify.toml` está configurado com
-> o `netlify-plugin-cache` persistindo `resources/_gen` e o cache de módulos
-> do Hugo entre builds. O primeiro deploy depois de habilitar o cache é
-> frio; os seguintes reusam imagens processadas, SCSS compilado e módulos
-> remotos (~50–80% mais rápido). Por isso o build command não usa `--gc`:
-> isso limparia exatamente o que queremos cachear.
+### Ambiente de Desenvolvimento
 
-## Como Contribuir
-
-### 1. Fork e Clone
-
-- Faça um fork do repositório
-- Clone seu fork localmente
-
-### 2. Ambiente de Desenvolvimento
-
-- Use Docker (recomendado) ou instale as dependências localmente
+- Use Docker ou instale as dependências localmente
 - Siga as instruções acima para configurar o ambiente
 
-### 3. Fazendo Mudanças
-
-- Crie uma branch para sua feature: `git checkout -b feature/nova-funcionalidade`
-- Faça suas alterações
-- Teste localmente usando `./scripts/dev.sh start` (Docker) ou `hugo server`
-- Commit suas mudanças: `git commit -m "Adiciona nova funcionalidade"`
-
-### 4. Criando Posts
+### Criando Posts
 
 ```shell
 # Com Docker
 ./scripts/dev.sh new-post "Título do Post"
 
 # Manualmente
-mkdir -p content/2025/01/15/meu-post
-nvim content/2025/01/15/meu-post/index.md
+hugo new content/2025/01/15/meu-post.md
 ```
 
 ### 5. Estrutura de um Post
@@ -119,20 +95,12 @@ categories: [categoria]
 Conteúdo do post aqui...
 ```
 
-### 6. Pull Request
-
-- Push para sua branch: `git push origin feature/nova-funcionalidade`
-- Abra um Pull Request no GitHub
-- Descreva suas mudanças claramente
-
 ## Estrutura do Projeto
 
 ```
-akitaonrails.github.io/
+arvas-blog/
 ├── content/              # Posts e páginas (Markdown)
-│   ├── _index.md         # Homepage (auto-gerado, posts recentes)
-│   └── archives/
-│       └── _index.md     # Arquivo completo (auto-gerado, posts antigos)
+│   └── _index.md         # Homepage (auto-gerado, posts recentes)
 ├── layouts/              # Templates HTML
 ├── assets/               # CSS, JS, imagens
 ├── hugo.yaml             # Configuração do Hugo (inclui render segments)
@@ -143,31 +111,3 @@ akitaonrails.github.io/
 └── docker-compose.yml    # Orquestração Docker (usa --renderSegments recent)
 ```
 
-## Checklist para Contribuições
-
-- [ ] Testei localmente com Docker ou instalação local
-- [ ] Gerei o índice de posts (`./scripts/dev.sh generate-index` ou `./scripts/generate_index.rb`)
-- [ ] Verifiquei se o site funciona corretamente
-- [ ] Segui as convenções de nomenclatura do projeto
-- [ ] Documentei mudanças significativas
-
-## Diretrizes de Contribuição
-
-- Mantenha mudanças pequenas e focadas
-- Teste sempre antes de submeter
-- Use mensagens de commit descritivas
-- Respeite o estilo de código existente
-- Para mudanças grandes, abra uma issue primeiro
-
-## Licença
-
-Shield: [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
-
-This work is licensed under a
-[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
-
-[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
-
-[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
-[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
-[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg

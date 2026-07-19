@@ -4,7 +4,7 @@ segments:
   recent:
     includes:
     - kind: '{home,section,taxonomy,term}'
-    - path: '{/2026/**,/2027/**,/about,/archives,/off-topic}'
+    - path: '{posts/2026/**,posts/2027/**,/about}'
 
 title: ArVas
 enableEmoji: true
@@ -69,7 +69,7 @@ params:
   # Disable Hextra's built-in FlexSearch: it shipped a ~14 MB client index
   # to a DuckDuckGo `site:` query instead — zero payload, full-text, instant.
   search:
-    enable: false
+    enable: true
 
   navbar:
     displayTitle: true
