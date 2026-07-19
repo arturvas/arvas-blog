@@ -76,15 +76,18 @@ params:
     displayLogo: true
 
   comments:
-    enable: false
+    enable: true
     type: giscus
 
     giscus:
       repo: "arturvas/arvas-blog"
-      repoID: "R_kgDOTbAlcQ"
-      category: "Announcements"
-      categoryID: "DIC_kwDOTbAlcc4DBh-b"
+      repoId: "R_kgDOTbAlcQ"
+      category: "General"
+      categoryId: "DIC_kwDOTbAlcc4DBh-c"
       mapping: "pathname"
+      lang: "pt"
+      theme: "preferred_color_scheme"
+      loading: "lazy"
 
   footer:
     displayCopyright: true
