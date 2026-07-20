@@ -3,7 +3,7 @@ title: "Primeira Postagem"
 date: 2026-07-18T22:13:29-03:00
 draft: false
 comments: true
-tags: ["vida-na-argentina", "adaptacao-cultural", "objetivo-do-blog", "apresentacao"]
+tags: ["vida-na-argentina", "adaptacao-cultural", "objetivo-do-blog", "apresentacao", "unlp", "metodologia-unlp"]
 
 ---
 
@@ -30,6 +30,8 @@ Vou falar também sobre burocracia -- algumas dicas de como tirar alguns documen
 
 ### O relato de medicina
 **E o principal objetivo:** o meu relato de estudante na _Facultad de Ciências Médicas_ na UNLP (_Universidad Nacional de La Plata_). As dificuldades que encontrei, metodologia de ensino, dicas de estudos, e tudo mais sobre a vida acadêmica. 
+
+Aliás, um segredinho: eu ainda não estou matriculado. Meus planos é entrar em 2027. Algo ainda me "impede", é o fato de que preciso de uma certificação de proficiência em espanhol, ao menos B1-B2, e farei então o [CertEA](https://idihcs.fahce.unlp.edu.ar/else/certea/). No entanto, minha esposa já está no primeiro ano, _tomou_ algumas provas como Anatomia, Histologia e Embriologia. Enfim, à muito o que se falar da faculdade, aguardem os próximos posts. 
 
 ---
 
