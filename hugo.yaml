@@ -105,7 +105,7 @@ params:
     iframeStyle: "border:0; width:100%; aspect-ratio:16/9;"
 
   theme:
-    default: light
+    default: system
 
   author:
     name: Artur Vasconcelos
