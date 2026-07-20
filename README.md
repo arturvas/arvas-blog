@@ -87,6 +87,10 @@ arvas-blog/
 └── go.mod                   # Dependência do Hugo Modules (tema Hextra)
 ```
 
+## branch
+
+Tenho a branch `ajuste-tema` especificamente pra ajustes do tema. 
+
 ## Comandos úteis
 
 ```shell
