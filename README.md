@@ -1,113 +1,96 @@
-# ArVas - based on Hextra Starter Template
+# ArVas — blog pessoal (baseado no Hextra Starter Template)
 
-## Desenvolvimento Local
+Diário de um brasileiro estudando medicina na UNLP, La Plata, Argentina.
 
-### Pré-requisitos
+## Stack
 
-**Docker (Recomendado)**
+- [Hugo](https://gohugo.io) (Extended) + tema [Hextra](https://github.com/imfing/hextra) via Hugo Modules
+- Ruby (só localmente, pra gerar o índice da home)
+- Deploy automático via [Cloudflare Pages](https://pages.cloudflare.com) a cada push na `main`
+- Comentários via [Giscus](https://giscus.app) (GitHub Discussions)
 
-- Docker e Docker Compose
+## Pré-requisitos
 
-**Instalação Local**
-
-- Hugo (Extended version)
-- Go
-- Ruby
+- Hugo Extended — `brew install hugo`
+- Go — `brew install go` (necessário pro Hugo Modules resolver o tema)
+- Ruby — `brew install ruby` (só pro script de índice)
 - Git
 
-### Usando Docker
+Docker é **opcional** `docker-compose.yml`/`dev.sh` existem no repo por precaução, mas o fluxo abaixo não depende deles.
 
-1. **Clone o repositório:**
+## Fluxo de trabalho: publicar um post novo
 
-```shell
-git clone https://github.com/arturvas/arvas-blog.git
-cd arvas-blog
-```
-
-2. **Inicie o ambiente:**
+**1. Criar o post** (pasta com data + slug, page bundle):
 
 ```shell
-./scripts/dev.sh start
+hugo new content/posts/2026/07/19/titulo-do-post/index.md
 ```
 
-3. **Acesse o blog:**
+Isso gera o arquivo com front matter pronto (`draft: true` por padrão) e cria a pasta certa pra você poder colocar imagens junto depois, se quiser (`content/posts/2026/07/19/titulo-do-post/foto.jpg`).
 
-- <http://localhost:1313>
+**2. Escrever o conteúdo** no `index.md` gerado.
 
-4. **Comandos úteis:**
+**3. Tirar do rascunho**, quando terminar:
 
-```shell
-./scripts/dev.sh logs           # Ver logs
-./scripts/dev.sh stop           # Parar ambiente
-./scripts/dev.sh new-post       # Criar novo post
-./scripts/dev.sh generate-index # Gerar índice
-./scripts/dev.sh help           # Ver todos os comandos
-```
-
-### Instalação Local
-
-```shell
-# clone repository
-git clone https://github.com/arturvas/arvas-blog.git
-cd arvas-blog
-
-# adicionar conteúdo
-hugo new content/2025/08/29/hello/index.md
-
-# gerar índice (gera _index.md + archives/_index.md)
-./scripts/generate_index.rb
-
-# build completo (produção) — sem --gc para não invalidar o cache do Netlify
-hugo --minify
-
-# dev server rápido (só renderiza 2025+ via renderSegments + in-memory + fast render)
-hugo server -D
-
-```
-
-### Ambiente de Desenvolvimento
-
-- Use Docker ou instale as dependências localmente
-- Siga as instruções acima para configurar o ambiente
-
-### Criando Posts
-
-```shell
-# Com Docker
-./scripts/dev.sh new-post "Título do Post"
-
-# Manualmente
-hugo new content/2025/01/15/meu-post.md
-```
-
-### 5. Estrutura de um Post
-
-```markdown
----
-title: "Título do Post"
-date: 2025-01-15T10:00:00-03:00
+```yaml
 draft: false
-description: "Descrição do post"
-tags: [tag1, tag2]
-categories: [categoria]
----
-
-Conteúdo do post aqui...
 ```
 
-## Estrutura do Projeto
+**4. Regenerar o índice da home** — passo fácil de esquecer, mas essencial:
+
+```shell
+ruby scripts/generate_index.rb
+```
+
+Sem isso, o post existe (a URL individual funciona), mas **não aparece listado** na home — ela é um arquivo gerado, não dinâmico.
+
+**5. Conferir localmente:**
+
+```shell
+hugo server -D
+```
+
+Abre `http://localhost:1313`, confirma que o post aparece na home e que o conteúdo está como esperado.
+
+**6. Commit e push:**
+
+```shell
+git add .
+git commit -m "Novo post: título aqui"
+git push origin main
+```
+
+O Cloudflare Pages builda e publica automaticamente.
+
+## Comentários (Giscus)
+
+Configurados em `hugo.yaml` sob `params.comments`. Usa GitHub Discussions do próprio repositório. Se precisar reconfigurar (trocar categoria, etc.), gera um novo bloco em [giscus.app](https://giscus.app/pt), selecionando a categoria pela lista suspensa, e copia `repoId`/`categoryId` pro `hugo.yaml`.
+
+## Estrutura do projeto
 
 ```
 arvas-blog/
-├── content/              # Posts e páginas (Markdown)
-│   └── _index.md         # Homepage (auto-gerado, posts recentes)
-├── layouts/              # Templates HTML
-├── assets/               # CSS, JS, imagens
-├── hugo.yaml             # Configuração do Hugo (inclui render segments)
-├── go.mod                # Dependências Go
+├── content/
+│   ├── _index.md          # Homepage — AUTO-GERADO por generate_index.rb
+│   ├── about.md            # Página "Sobre"
+│   └── posts/
+│       └── 2026/07/19/titulo-do-post/
+│           └── index.md
+├── layouts/
+│   └── partials/custom/
+│       └── head-end.html   # CSS customizado (tipografia, cores, easter eggs)
+├── assets/
+│   └── js/                 # FlexSearch (busca nativa, embutida no tema)
 ├── scripts/
-│   └── generate_index.rb # Gera _index.md + archives/_index.md
-├── Dockerfile            # Imagem Docker
-└── docker-compose.yml    # Orquestração Docker (usa --renderSegments recent)
+│   └── generate_index.rb   # Gera content/_index.md a partir dos posts
+├── hugo.yaml                # Config principal (tema, comentários, busca, menu)
+└── go.mod                   # Dependência do Hugo Modules (tema Hextra)
 ```
 
+## Comandos úteis
+
+```shell
+hugo server -D        # dev local, inclui rascunhos
+hugo --minify          # build de produção (o que o Cloudflare Pages roda)
+ruby scripts/generate_index.rb   # regenera a home após mudar/criar/remover posts
+```

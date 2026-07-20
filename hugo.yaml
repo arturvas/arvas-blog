@@ -87,7 +87,7 @@ params:
       mapping: "pathname"
       lang: "pt"
       theme: "preferred_color_scheme"
-      loading: "lazy"
+      # loading: "lazy"
 
   footer:
     displayCopyright: true
