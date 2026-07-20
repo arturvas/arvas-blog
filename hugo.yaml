@@ -12,6 +12,7 @@ locale: "pt-BR"
 defaultContentLanguage: "pt-br"
 baseURL: "https://www.arvas.pages.dev/"
 
+disableLanguages: ["en"]
 disableKinds:
 - term
 
