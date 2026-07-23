@@ -1,7 +1,7 @@
 ---
 title: "DNI Argentino: Antecedentes criminais da embaixada evitam meses de espera"
 date: 2026-07-22T14:35:33-03:00
-draft: true
+draft: false
 tags: ["vida-na-argentina", "dni", "documentos-essenciais", "dicas", "consulado-brasileiro"]
 ---
 
