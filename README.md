@@ -94,7 +94,12 @@ Tenho a branch `ajuste-tema` especificamente pra ajustes do tema.
 ## Comandos úteis
 
 ```shell
-hugo server -D        # dev local, inclui rascunhos
-hugo --minify          # build de produção (o que o Cloudflare Pages roda)
-ruby scripts/generate_index.rb   # regenera a home após mudar/criar/remover posts
+hugo server -D                      # dev local, inclui rascunhos
+hugo --minify                       # build de produção (o que o Cloudflare Pages roda)
+ruby scripts/generate_index.rb      # regenera a home após mudar/criar/remover posts
+
+# Configurei um alias no meu .zshrc file, pra listar as tags ja utilizadas. Uso MacOS, então ficou assim:
+`alias hugotags='grep -rh "^tags:" content/ | sed -E "s/tags: *\[//; s/\]//" | tr "," "\n" | tr -d "\" " | sort -u'`
+
+hugotags                            #lista todas as tags ja utilizadas nos posts.
 ```
