@@ -193,68 +193,6 @@
 
 </style>
 
-<script>
-// Language preference. Two cookies do the work:
-//   lang_pref     — persistent (1 year). Records the visitor's last home language.
-//   lang_session  — session-only (cleared on tab close). Set on the first home
-//                   load of a session; suppresses further auto-redirects for
-//                   that session so a user who manually visits the other
-//                   language (e.g. deletes "/en" from the URL bar) isn't
-//                   bounced back. See issue #36.
-// Behavior:
-//   - First home load of a session with no lang_pref → redirect by browser
-//     locale, set lang_session.
-//   - First home load with a lang_pref pointing the other way → redirect,
-//     set lang_session.
-//   - Subsequent home loads in the same session → no redirect; update
-//     lang_pref to match the current page (so Hextra's built-in language
-//     dropdown also "sticks" once you land).
-(function () {
-  try {
-    var path = window.location.pathname;
-    var isPtHome = path === "/" || path === "/index.html";
-    var isEnHome = path === "/en/" || path === "/en/index.html";
-    if (!isPtHome && !isEnHome) return;
-
-    var pref = (document.cookie.match(/(?:^|;\s*)lang_pref=(pt|en)/) || [])[1] || null;
-    var sessionVisited = /(?:^|;\s*)lang_session=1/.test(document.cookie);
-    var currentLang = isEnHome ? "en" : "pt";
-
-    if (sessionVisited) {
-      // Returning visit in the same session. Trust the URL; sync lang_pref.
-      if (pref !== currentLang) {
-        document.cookie = "lang_pref=" + currentLang + "; path=/; max-age=31536000; samesite=lax";
-      }
-      return;
-    }
-
-    // First home hit of the session — mark it before deciding to redirect.
-    document.cookie = "lang_session=1; path=/; samesite=lax";
-
-    if (pref === "en" && isPtHome) {
-      window.location.replace("/en/");
-      return;
-    }
-    if (pref === "pt" && isEnHome) {
-      window.location.replace("/");
-      return;
-    }
-
-    if (!pref) {
-      var browser = (navigator.language || navigator.userLanguage || "en").toLowerCase();
-      var wantsEn = !browser.startsWith("pt");
-      if (wantsEn && isPtHome) {
-        window.location.replace("/en/");
-      } else if (!wantsEn && isEnHome) {
-        window.location.replace("/");
-      }
-    }
-  } catch (e) {
-    // never break the page on a redirect failure
-  }
-})();
-</script>
-
 {{ if .IsHome }}
 {{/*
   Homepage easter egg: start typing anywhere on the homepage to fuzzy-filter
@@ -303,14 +241,11 @@
 (function () {
   try {
     var p = window.location.pathname;
-    var isHome = p === "/" || p === "/index.html" || p === "/en/" || p === "/en/index.html";
+    var isHome = p === "/" || p === "/index.html";
     if (!isHome) return;
 
-    var isEn = p.indexOf("/en/") === 0;
-    var INDEX_URL = isEn ? "/en/search-index.json" : "/search-index.json";
-    var L = isEn
-      ? { ph: "Type to filter every article…", esc: "Esc to close", loading: "loading…", empty: "no articles found", count: function (n) { return n + " result" + (n === 1 ? "" : "s"); } }
-      : { ph: "Digite pra filtrar todos os artigos…", esc: "Esc pra fechar", loading: "carregando…", empty: "nenhum artigo encontrado", count: function (n) { return n + " resultado" + (n === 1 ? "" : "s"); } };
+    var INDEX_URL = "/search-index.json";
+    var L = { ph: "Digite pra filtrar todos os artigos…", esc: "Esc pra fechar", loading: "carregando…", empty: "nenhum artigo encontrado", count: function (n) { return n + " resultado" + (n === 1 ? "" : "s"); } };
 
     var data = null;    // [{t,u,d}]
     var norm = null;    // normalized titles, same order
@@ -482,8 +417,7 @@
 <script>
 (function () {
   try {
-    var isEn = window.location.pathname.indexOf("/en/") === 0;
-    var PH = isEn ? "Search the site (DuckDuckGo)…" : "Buscar no site (DuckDuckGo)…";
+    var PH = "Buscar no site (DuckDuckGo)…";
     var SITE = "arvas.pages.dev";
 
     function inputs() { return document.querySelectorAll(".hextra-search-input"); }
